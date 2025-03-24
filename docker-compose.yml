@@ -1,0 +1,29 @@
+services:
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: ./rabbit/Dockerfile
+    ports:
+      - "5671:5671"
+      - "15671:15671"
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - standard
+  php:
+    build:
+      context: ./
+      dockerfile: ./php/Dockerfile
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./consumers/:/app/consumers
+      - ./producers/:/app/producers
+      - ./crt:/app/crt
+    networks:
+      - standard
+networks:
+  standard:
