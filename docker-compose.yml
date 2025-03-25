@@ -20,9 +20,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes:
-      - ./consumers/:/app/consumers
-      - ./producers/:/app/producers
-      - ./crt:/app/crt
+      - ./:/app
     networks:
       - standard
 networks:
